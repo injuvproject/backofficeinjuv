@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ .PageTitle }}</title>
+<link href="/static/css/site.min.css" rel="stylesheet">
+<link href="{{ .CurrentURL }}" rel="canonical">
+</head>
+<body>
+<header>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+				data-target="#top-menu" aria-expanded="false">
+					<span class="sr-only">Abrir menú</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">Barranco</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="top-menu">
+				<ul class="nav navbar-nav navbar-right">
+					<li {{ classIfHere "/" "active" }}><a href="/">Inicio</a></li>
+					<li><a href="">Exhibiciones</a></li>
+					<li {{ classIfRootHere "/gallery/" "active" }}><a href="/gallery/">Galería</a></li>
+					<li {{ classIfHere "/services.html" "active" }}><a href="/services.html">Servicios</a></li>
+					<li {{ classIfHere "/contact.html" "active" }}><a href="/contact.html">Contacto</a></li>
+				</ul>
+			</div>
+
+			<ul class="navbar-social">
+				<li><a href=""><i class="fa fa-twitter"></i> <span class="sr-only">Twitter</span></a></li>
+				<li><a href=""><i class="fa fa-instagram"></i> <span class="sr-only">Instagram</span></a></li>
+				<li><a href=""><i class="fa fa-facebook"></i> <span class="sr-only">Facebook</span></a></li>
+			</ul>
+		</div>
+	</nav>
+</header>
+{{ yield }}
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-10">
+				<p>
+					<strong>Barranco Centro de Arte</strong><br>
+					Avenida Motatán, Quinta Monina, Colinas de Bello Monte<br>
+					Baruta, Caracas<br>
+					Venezuela
+				</p>
+
+				<ul class="phone-numbers">
+					<li><i class="fa fa-phone-square"></i> 0212-7510898</li>
+					<li><i class="fa fa-phone-square"></i> 0212-7510772</li>
+					<li><i class="fa fa-phone-square"></i> 0212-7510905</li>
+				</ul>
+			</div>
+			<div class="col-xs-2">
+				<ul class="navbar-social">
+					<li><a href=""><i class="fa fa-twitter"></i> <span class="sr-only">Twitter</span></a></li>
+					<li><a href=""><i class="fa fa-instagram"></i> <span class="sr-only">Instagram</span></a></li>
+					<li><a href=""><i class="fa fa-facebook"></i> <span class="sr-only">Facebook</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer>
+<script src="/static/js/site.min.js"></script>
+</body>
+</html>
