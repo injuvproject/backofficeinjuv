@@ -6,6 +6,7 @@ import (
 	"github.com/zenazn/goji"
 )
 
+//hola chicos
 func main() {
 	goji.Use(renderer.InjectRender)
 
