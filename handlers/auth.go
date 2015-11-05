@@ -14,3 +14,7 @@ func GetLogin(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	template.HTML(w, http.StatusOK, "home/login", bnd)
 }
+
+func PostLogin(c web.C, w http.ResponseWriter, r *http.Request) {
+
+}
