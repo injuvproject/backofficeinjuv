@@ -35,7 +35,7 @@ func main() {
 
 		err := db.Get(&newuser, "SELECT * FROM Usuario WHERE id=1", "newuser")
 		if err != nil {
-			fmt.Printf("error %#v\n")
+			fmt.Printf("%#v\n", err)
 		}
 		fmt.Printf("%#v\n", newuser)
 
