@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 	<title>{{ .PageTitle }}</title>
+ 
+	<!-- <link rel="stylesheet" href="/assets/css/app.min.css"> -->
+	<link rel="stylesheet" href="/assets/css/panel.min.css">
+
+</head>
+<body>
+	<header>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-menu">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">INJUV TEMUCO</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-navbar-menu">
+				<ul class="nav navbar-nav navbar-right" id="navmenu">
+					<li class="">
+						<a href="/panel/files"><i class="fa fa-tasks fa-fw"></i> Actividades</a>
+					</li>
+					<li class="">
+						<a href="/panel/categories"><i class="fa fa-file fa-fw"></i> Documentos</a>
+					</li>
+					<li class="">
+						<a href="/panel/sections"><i class="fa fa-user fa-fw"></i> Perfil</a>
+					</li>
+					<li class="">
+						<a href="/panel/sections"><i class="fa fa-users fa-fw"></i> Cuentas</a>
+					</li>
+					<li class="visible-xs">
+						<a href="/"><i class="fa fa-sign-out fa-fw"></i>Salir del sitio</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown hidden-xs">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						<i class="fa fa-user fa-fw"></i> Injuv {{ .Name }} <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="/"><i class="fa fa-sign-out fa-fw"></i>Salir del sitio</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+ 	<section id="page">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					{{ yield }}
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="/assets/js/vendor/jquery.min.js"></script>
+	<script src="/assets/js/vendor/bootstrap.min.js"></script>
+</body>
+</html>

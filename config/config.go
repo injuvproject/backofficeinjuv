@@ -1,4 +1,10 @@
 package config
 
-//pass jwt
-SecretPassword = "h2so4injuv"
+const (
+	ConstUser  = "fullusuario"
+	ConstID    = "id"
+	ConstName  = "name"
+	ConstAdmin = "guuid"
+	//pass jwt
+	SecretPassword = "h2so4injuv"
+)
