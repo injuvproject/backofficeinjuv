@@ -1,0 +1,55 @@
+						{{ $iduser := .ID}}
+						{{ if .Success }}
+						<div class="alert alert-success alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							
+						</div>
+						{{ end }}
+						<h1 class="page-heading">Cuentas</h1>
+						<a href="/panel/{{ $iduser }}/crear.html" class="btn btn-success"><i class="fa fa-plus-square fa-fw"></i></i>Crear Cuenta</a>
+						</br>
+						</br>
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<tr>
+									<td></td>
+									<td></i>Nombre</td>
+									<td>Email</td>
+									<td>Acciones</td>
+								</tr>
+								{{ range .Users}}
+								<tr>
+									<td><i class="fa fa-user fa-fw"></td>
+									<td>  {{ .FirstName }} {{ .LastName }}</td>
+									<td>{{ .Email }}</td>
+									<td>
+										<a href="/panel/{{ $iduser }}/cuenta/{{ .ID }}/mostrar.html" class="btn btn-info"><i class="fa fa-info fa-fw"></i>Detalle</a>
+										<a href="/panel/{{ $iduser }}/cuenta/{{ .ID }}/editar.html" class="btn btn-warning"><i class="fa fa-pencil-square-o fa-fw"></i>Editar</a>
+										<a href="/panel/{{ $iduser }}/cuenta/{{ .ID }}/eliminar.html" class="btn btn-danger"
+											onclick="return confirm('¿Seguro que desea eliminar este usuario? Esta acción no se puede deshacer');"><i class="fa fa-trash-o fa-fw"></i>Eliminar</a>
+									</td>
+								</tr>
+								{{ end }}
+							</table>
+							{{ if .Page}}
+							<nav>
+								<ul class="pagination">
+									<li>
+										<a href="/panel/{{ $iduser }}/cuentas/pagina/1.html" aria-label="Anterior">
+										<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									{{ range $index, $element := .Page }}
+									<li><a href="/panel/{{ $iduser }}/cuentas/pagina/{{ $element }}.html">{{ $element }}</a></li>
+									{{ end }}
+									<li>
+										<a href="/panel/{{ $iduser }}/cuentas/pagina/{{ .TotalPage }}.html" aria-label="Siguiente">
+										<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+							{{ end }}
+						
+						</div>
+					

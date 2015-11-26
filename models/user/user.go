@@ -16,7 +16,15 @@ var (
 )
 
 const (
-	sqlGetUserByID      = "SELECT id, nombre, apellidos, userName, email, contrasena, fechaCreacion, admin FROM usuario WHERE id = ? LIMIT 1"
+	sqlInsertUser = "INSERT INTO usuario ( nombre, apellidos, userName, email, contrasena, fechaCreacion, admin) VALUES (:nombre, :apellidos, :userName, :email, :contrasena, :fechaCreacion, :admin)"
+
+	sqlGetUserByID       = "SELECT id, nombre, apellidos, userName, email, contrasena, fechaCreacion, admin FROM usuario WHERE id = ? LIMIT 1"
+	sqlUpdateUserDetails = "UPDATE usuario SET nombre = :nombre, apellidos = :apellidos, userName = :userName, email = :email, contrasena = :contrasena, admin = :admin, fechaCreacion = :fechaCreacion  WHERE ID = :id LIMIT 1"
+
+	sqlGetAllUserRange = "SELECT id, nombre, apellidos, userName, email, contrasena, fechaCreacion, admin FROM usuario LIMIT ?,?"
+	sqlUserCount       = "SELECT count(id) FROM usuario"
+	sqlDeleteUserByID  = "DELETE FROM usuario WHERE ID=? LIMIT 1"
+
 	sqlUserExistByEmail = "SELECT true FROM usuario where email = ? LIMIT 1"
 	sqlLastIdUser       = "SELECT id FROM usuario WHERE email = ? Limit 1"
 )
@@ -91,5 +99,102 @@ func (u *User) LoadID(db *sqlx.DB) error {
 		panic(err)
 	}
 	u.ID = num
+	return nil
+}
+
+func Range(db *sqlx.DB, currentPage, perPage int) ([]*User, error) {
+	var start, limit int
+
+	start = (currentPage - 1) * perPage
+	limit = perPage
+
+	var (
+		users []*User
+	)
+
+	rows, err := db.Query(sqlGetAllUserRange, start, limit)
+	if err != nil {
+		panic(err)
+	}
+
+	for rows.Next() {
+		u := &User{}
+		err := rows.Scan(
+			&u.ID,
+			&u.FirstName,
+			&u.LastName,
+			&u.UserName,
+			&u.Email,
+			&u.Password,
+			&u.SignupDate,
+			&u.Admin,
+		)
+
+		if err != nil {
+			if err == sql.ErrNoRows {
+				return users, nil
+			}
+			panic(err)
+		}
+
+		users = append(users, u)
+	}
+
+	if err := rows.Err(); err != nil {
+		panic(err)
+	}
+
+	return users, nil
+}
+
+func CountAll(db *sqlx.DB) int {
+	row := db.QueryRow(sqlUserCount)
+
+	var total int
+	if err := row.Scan(&total); err != nil {
+		if err == sql.ErrNoRows {
+			return 0
+		}
+		panic(err)
+	}
+
+	return total
+}
+
+func (u User) Create(db *sqlx.DB) {
+
+	_, err := db.NamedExec(sqlInsertUser, &u)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (u User) Save(db *sqlx.DB) {
+
+	_, err := db.NamedExec(sqlUpdateUserDetails, &u)
+	if err != nil {
+		panic(err)
+	}
+
+}
+
+func Delete(db *sqlx.DB, id int) error {
+	if id <= 0 {
+		return ErrNoIDSent
+	}
+
+	stmt, err := db.Prepare(sqlDeleteUserByID)
+	result, err := stmt.Exec(id)
+
+	if err != nil {
+		panic(err)
+	}
+
+	n, _ := result.RowsAffected()
+
+	if n != 1 {
+		return ErrUserNotExist
+	}
+
 	return nil
 }

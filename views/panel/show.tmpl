@@ -1,0 +1,47 @@
+{{ if .Success }}
+<div class="alert alert-success alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&tispan></button>
+	{{ .Success }}
+</div>
+{{ end }}
+{{ if .ADMIN }}
+<h1 class="page-heading">Cuenta {{ .User.FirstName }}</h1>
+{{ else }}
+<h1 class="page-heading">Perfil</h1>
+{{ end }}
+
+<div class="table-responsive">
+	<table class="table table-striped">
+		<tr>
+			<td>Nombre:</td>
+			<td>{{ .User.FirstName }} {{ .User.LastName }}</td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td>{{ .User.UserName }}</td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td>{{ .User.Email }}</td>
+		</tr>
+		<tr>
+			<td>Contraseña:</td>
+			<td>{{ .User.Password }}</td>
+		</tr>
+		<tr>
+			<td>Admin:</td>
+			<td>{{ .User.Admin }}</td>
+		</tr>
+	</table>
+	<div class="col-sm-9 col-md-6">
+		<div class="form-group">
+			{{ if .ADMIN }}
+			<a href="/panel/{{ .ID }}/cuentas.html" class="btn btn-default">Cancelar</a>
+			<a href="/panel/{{ .ID }}/cuenta/{{ .User.ID }}/eliminar.html" class="btn btn-danger"										onclick="return confirm('¿Seguro que desea eliminar este usuario? Esta acción no se puede deshacer');"><i class="fa fa-trash-o fa-fw"></i>Eliminar</a>
+			<a href="/panel/{{ .ID }}/cuenta/{{ .User.ID }}/editar.html" class="btn btn-primary">Editar &rsaquo;</a>
+			{{ else }}
+			<a href="/panel/{{ .ID }}/perfil/{{ .User.ID }}/editar.html" class="btn btn-primary">Editar &rsaquo;</a>
+			{{ end }}
+		</div>
+	</div>
+</div>

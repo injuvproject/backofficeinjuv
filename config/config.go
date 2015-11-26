@@ -7,4 +7,6 @@ const (
 	ConstAdmin = "guuid"
 	//pass jwt
 	SecretPassword = "h2so4injuv"
+	//
+	NumberResultPage = 1
 )

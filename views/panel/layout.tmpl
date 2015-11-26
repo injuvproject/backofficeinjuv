@@ -5,6 +5,8 @@
  
 	<!-- <link rel="stylesheet" href="/assets/css/app.min.css"> -->
 	<link rel="stylesheet" href="/assets/css/panel.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 <body>
@@ -23,19 +25,21 @@
 			<div class="collapse navbar-collapse" id="bs-navbar-menu">
 				<ul class="nav navbar-nav navbar-right" id="navmenu">
 					<li class="">
-						<a href="/panel/files"><i class="fa fa-tasks fa-fw"></i> Actividades</a>
+						<a href="/panel/{{ .ID }}/actividades.html"><i class="fa fa-tasks fa-fw"></i> Actividades</a>
 					</li>
 					<li class="">
 						<a href="/panel/categories"><i class="fa fa-file fa-fw"></i> Documentos</a>
 					</li>
 					<li class="">
-						<a href="/panel/sections"><i class="fa fa-user fa-fw"></i> Perfil</a>
+						<a href="/panel/{{ .ID }}/perfil/{{ .ID }}/mostrar.html"><i class="fa fa-user fa-fw"></i> Perfil</a>
 					</li>
+					{{ if .ADMIN }}
 					<li class="">
-						<a href="/panel/sections"><i class="fa fa-users fa-fw"></i> Cuentas</a>
+						<a href="/panel/{{ .ID }}/cuentas.html"><i class="fa fa-users fa-fw"></i> Cuentas</a>
 					</li>
+					{{ end }}
 					<li class="visible-xs">
-						<a href="/"><i class="fa fa-sign-out fa-fw"></i>Salir del sitio</a>
+						<a href="/logout"><i class="fa fa-sign-out fa-fw"></i>Salir del sitio</a>
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -44,7 +48,7 @@
 						<i class="fa fa-user fa-fw"></i> Injuv {{ .Name }} <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="/"><i class="fa fa-sign-out fa-fw"></i>Salir del sitio</a></li>
+							<li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i>Salir del sitio</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -61,7 +65,15 @@
 			</div>
 		</div>
 	</section>
+	
 	<script src="/assets/js/vendor/jquery.min.js"></script>
+	<script src="/assets/js/vendor/jquery-ui.min.js"></script>
 	<script src="/assets/js/vendor/bootstrap.min.js"></script>
+	<script src="/assets/js/app.js"></script>
+	<script src="/assets/js/vendor/jquery.mjs.nestedSortable.js"></script>
+	
+
+
+
 </body>
 </html>

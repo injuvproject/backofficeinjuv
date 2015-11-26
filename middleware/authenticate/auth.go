@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	formatURLlogin = fmt.Sprintf("/login.html?false=%s", responseget.LogInErrEmalOrPassword)
+	formatURLlogin = fmt.Sprintf("/login.html?false=%s", getresponse.LogInErrEmalOrPassword)
 )
 
 func InjectAuthenticate(c *web.C, h http.Handler) http.Handler {

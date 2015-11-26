@@ -22,15 +22,13 @@ func GetLogin(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	cookie, _ := r.Cookie("injuv_auth")
 
-	if cookie != nil{
+	if cookie != nil {
 		claims, _ := security.Decode(cookie.Value)
 		id := int(claims["id"].(float64))
 		http.Redirect(w, r, fmt.Sprintf("/panel/%d.html", id), http.StatusFound)
 		return
 
-		
 	}
-
 
 	template.HTML(w, http.StatusOK, "home/login", bnd)
 }
@@ -49,13 +47,13 @@ func PostLogin(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	exist := newUser.EmailExist(db)
 	if exist == false {
-		http.Redirect(w, r, fmt.Sprintf("/login.html?false=%s", responseget.LogInErrEmalOrPassword), http.StatusFound)
+		http.Redirect(w, r, fmt.Sprintf("/login.html?false=%s", getresponse.LogInErrEmalOrPassword), http.StatusFound)
 		return
 	}
 
 	err := newUser.LoadID(db)
 	if err != nil {
-		http.Redirect(w, r, fmt.Sprintf("/login.html?false=%s", responseget.LogInErrEmalOrPassword), http.StatusFound)
+		http.Redirect(w, r, fmt.Sprintf("/login.html?false=%s", getresponse.LogInErrEmalOrPassword), http.StatusFound)
 		return
 	}
 
@@ -91,7 +89,7 @@ func PostLogin(c web.C, w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, fmt.Sprintf("/panel/%d.html", newUser.ID), http.StatusFound)
 		return
 	}
-	http.Redirect(w, r, fmt.Sprintf("/login.html?false=%s", responseget.LogInErrEmalOrPassword), http.StatusFound)
+	http.Redirect(w, r, fmt.Sprintf("/login.html?false=%s", getresponse.LogInErrEmalOrPassword), http.StatusFound)
 	return
 
 }

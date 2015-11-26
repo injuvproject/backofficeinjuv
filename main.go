@@ -28,9 +28,25 @@ func main() {
 	goji.Use(renderer.InjectRender)
 	goji.Use(static.Static("assets"))
 	goji.Get("/", http.RedirectHandler("/login.html", http.StatusFound))
+	goji.Get("/logout", handlers.Logout)
 	goji.Get("/login.html", handlers.GetLogin)
 	goji.Post("/login.html", cji.Use(database.InjectDatabase(db)).On(handlers.PostLogin))
-	goji.Get("/panel/:id.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetProfile))
+	//perfil
+	goji.Get("/panel/:id/perfil/:uid/mostrar.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetAccount))
+	goji.Get("/panel/:id/perfil/:uid/editar.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetEditAccount))
+	goji.Post("/panel/:id/perfil/:uid/editar.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.PostEditAccount))
+	goji.Get("/panel/:id.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.ShowPanel))
+	//Cuentas
+	goji.Get("/panel/:id/cuentas.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetAccounts))
+	goji.Get("/panel/:id/cuentas/pagina/:page.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetAccounts))
+	goji.Get("/panel/:id/crear.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetNewAccount))
+	goji.Post("/panel/:id/crear.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.PostNewAccount))
+	goji.Get("/panel/:id/cuenta/:uid/mostrar.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetAccount))
+	goji.Get("/panel/:id/cuenta/:uid/editar.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetEditAccount))
+	goji.Post("/panel/:id/cuenta/:uid/editar.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.PostEditAccount))
+	goji.Get("/panel/:id/cuenta/:uid/eliminar.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetDeleteProfile))
+	//Actividades
+	goji.Get("/panel/:id/actividades.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetActivities))
 
 	goji.Get("/test", cji.Use(authenticate.InjectAuthenticate).On(func(c web.C, w http.ResponseWriter, r *http.Request) {
 

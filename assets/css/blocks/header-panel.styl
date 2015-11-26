@@ -1,0 +1,85 @@
+$nav-width = 230px
+
+header
+	.navbar-default
+		background linear-gradient(top, $lan-azul, darken($lan-azul, 30%))
+		border 0
+		color #fff
+		
+		.navbar-brand
+			color #fff
+			font-weight bold
+			transition color .2s
+			
+			&:hover, &:focus
+				color #fff
+			
+		.navbar-nav
+			li 
+				color #fff
+				
+				a, &.active a
+					color #fff
+					
+					&:hover, &:active, &:focus
+						background darken($lan-azul, 50%)
+						color #fff
+						
+						.fa
+							color #fff
+					
+					.fa, .caret
+						color #fff
+						
+				&.active a
+					color #fff
+					background lighten($lan-azul, 10%)
+					position relative
+					
+					&:after
+						content ""
+						position absolute
+						top 0
+						left 0
+						bottom 0
+						width 4px
+						background lighten($lan-azul, 30%)
+						
+			.open 
+				> a, > a:focus, > a:hover
+					background darken($lan-azul, 50%)
+					color #fff
+
+		.dropdown-menu
+			li a, li a .fa
+				color #000
+					
+		.navbar-toggle
+			&:focus, &:hover
+				background-color #fff
+				border-color #fff
+
+				.icon-bar
+					background-color $lan-azul
+
+			.icon-bar
+				background-color #fff
+				
+		.navbar-collapse
+			border-color darken($lan-azul, 30%)
+
+@media screen and (min-width 768px)
+	#navmenu
+		position fixed
+		top 50px
+		left 0
+		bottom 0
+		background $lan-azul
+		width $nav-width
+		
+		li 
+			display block
+			width 100%
+		
+	#page
+		margin-left $nav-width
