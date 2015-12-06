@@ -1,6 +1,7 @@
 <div class="row">
-	<div class="col-md-3 bg-danger" id="impedidas">
+	<div class="col-md-3 bg-danger colum-activity" id="impedidas">
 		<h1 class="page-heading">Impedidas</h1>
+		{{ if .ADMIN }}
 		<button type="button" class="btn  btn-defaul" data-toggle="modal" data-target="#myModal">
   				Nueva Actividad
 		</button>
@@ -31,24 +32,118 @@
 		    </div>
 		  </div>
 		</div>
+		{{ end }}
 		<br>
 		<br>
 	</div>
-	<div class="col-md-3 bg-info" id="pendientes">
+	<div class="col-md-3 bg-info colum-activity" id="pendientes">
 		<h1 class="page-heading">Pendientes</h1>
-		<button class="btn btn-default">Nueva Actividad</button>
+		{{ if .ADMIN }}
+		<button type="button" class="btn  btn-defaul" data-toggle="modal" data-target="#myModal">
+  				Nueva Actividad
+		</button>
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Nueva Actividad</h4>
+		      </div>
+		      <div class="modal-body">
+		      		<div class="row">
+		      			<div class="col-md-8">
+		      				descripcion
+		      			</div>
+		      			<div class="col-md-4">
+		      				Botones
+		      			</div>
+		      		</div>
+		        ...
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		        <button type="button" class="btn btn-primary">Crear</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		{{ end}}
 		<br>
 		<br>
 	</div>
-	<div class="col-md-3 bg-primary" id="proceso">
+	<div class="col-md-3 bg-primary colum-activity" id="proceso">
 		<h1 class="page-heading">En Proceso</h1>
-		<button class="btn btn-default">Nueva Actividad</button>
+		{{ if .ADMIN }}
+		<button type="button" class="btn  btn-defaul" data-toggle="modal" data-target="#myModal">
+  				Nueva Actividad
+		</button>
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Nueva Actividad</h4>
+		      </div>
+		      <div class="modal-body">
+		      		<div class="row">
+		      			<div class="col-md-8">
+		      				descripcion
+		      			</div>
+		      			<div class="col-md-4">
+		      				Botones
+		      			</div>
+		      		</div>
+		        ...
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		        <button type="button" class="btn btn-primary">Crear</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		{{ end }}
 		<br>
 		<br>
 	</div>
-	<div class="col-md-3 bg-success" id="terminadas">
+	<div class="col-md-3 bg-success colum-activity" id="terminadas">
 		<h1 class="page-heading">Terminadas</h1>
-		<button class="btn btn-default">Nueva Actividad</button>
+		{{ if .ADMIN }}
+		<button type="button" class="btn  btn-defaul" data-toggle="modal" data-target="#myModal">
+  				Nueva Actividad
+		</button>
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Nueva Actividad</h4>
+		      </div>
+		      <div class="modal-body">
+		      		<div class="row">
+		      			<div class="col-md-8">
+		      				descripcion
+		      			</div>
+		      			<div class="col-md-4">
+		      				Botones
+		      			</div>
+		      		</div>
+		        ...
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		        <button type="button" class="btn btn-primary">Crear</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		{{ end }}
 		<br>
 		<br>
 	</div>

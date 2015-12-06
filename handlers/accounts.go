@@ -117,7 +117,7 @@ func GetNewAccount(c web.C, w http.ResponseWriter, r *http.Request) {
 	bnd["ID"] = claims["id"]
 	bnd["ADMIN"] = claims["guuid"]
 
-	template.HTML(w, http.StatusOK, "panel/edit", bnd, render.HTMLOptions{
+	template.HTML(w, http.StatusOK, "panel/create", bnd, render.HTMLOptions{
 		Layout: "panel/layout",
 	})
 }
