@@ -17,13 +17,71 @@
 		      <div class="modal-body">
 		      		<div class="row">
 		      			<div class="col-md-8">
-		      				descripcion
+		      				<form class="form-horizontal">
+								<div class="form-group">
+									<div class="col-sm-10">
+									  	<label class="col-sm-2 control-label">Nombre</label>
+								     	<input type="text" class="form-control" id="name-activity" placeholder="@Ordenar Ficheros">
+								  	</div>
+								</div>
+								<div class="form-group">
+								    <div class="col-sm-10">
+								  		<label for="inputPassword" class="col-sm-2 control-label">Descripción</label>
+								   		<textarea class="form-control" id="description-activity" rows="3" placeholder="@Ingrese Descripcion"></textarea>
+								  	</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-10">
+	                					<div class="input-group date">
+	                    					<input type="text" class="form-control" name="expiracion-activity" id="datetimepicker1" placeholder="Fecha expiracion" value="" />
+	                    					<span class="input-group-addon">
+	                        					<span class="fa fa-calendar fa-fw"></span>
+	                    					</span>
+	                					</div>
+	                				</div>
+            					</div>
+            					<div class="form-group">
+								    <div class="col-sm-10">
+								  		<label for="inputPassword" class="col-sm-2 control-label">Recursos</label>
+		            					<select class="form-control input-sm" name="category" >
+											<option disabled selected>Selecionar</option>
+											{{ range .Users }}
+													<option value="{{ .ID }}" selected>{{ .FirstName }} {{ .LastName }}</option>  
+											{{ end }}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+								    <div class="col-sm-10">
+								  		<label for="inputPassword" class="col-sm-2 control-label">Estado</label>
+		            					<select class="form-control input-sm" name="category" >
+											<option disabled selected>Selecionar</option>
+											<option value="1" selected>Impedidos</option>
+											<option value="2" selected>Pendientes</option>
+											<option value="3" selected>En Proceso</option>
+											<option value="4" selected>Terminados</option>  
+										</select>
+									</div>
+								</div>				
+							</form>
 		      			</div>
 		      			<div class="col-md-4">
-		      				Botones
+		      				<h5 class="page-heading">Acciones</h5>
+		      				<div class="btn-group">
+							  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							     <span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu">
+							    <li><a href="#">Action</a></li>
+							    <li><a href="#">Another action</a></li>
+							    <li><a href="#">Something else here</a></li>
+							    <li role="separator" class="divider"></li>
+							    <li><a href="#">Separated link</a></li>
+							  </ul>
+							</div>
 		      			</div>
 		      		</div>
-		        ...
+		       Comments
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

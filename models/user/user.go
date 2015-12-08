@@ -22,6 +22,7 @@ const (
 	sqlUpdateUserDetails = "UPDATE usuario SET nombre = :nombre, apellidos = :apellidos, userName = :userName, email = :email, contrasena = :contrasena, admin = :admin, fechaCreacion = :fechaCreacion  WHERE ID = :id LIMIT 1"
 
 	sqlGetAllUserRange = "SELECT id, nombre, apellidos, userName, email, contrasena, fechaCreacion, admin FROM usuario LIMIT ?,?"
+	sqlGetAllUser      = "SELECT id, nombre, apellidos, userName, email, contrasena, fechaCreacion, admin FROM usuario"
 	sqlUserCount       = "SELECT count(id) FROM usuario"
 	sqlDeleteUserByID  = "DELETE FROM usuario WHERE ID=? LIMIT 1"
 
@@ -100,6 +101,46 @@ func (u *User) LoadID(db *sqlx.DB) error {
 	}
 	u.ID = num
 	return nil
+}
+
+func GetAll(db *sqlx.DB) ([]*User, error) {
+	var (
+		users []*User
+	)
+
+	rows, err := db.Query(sqlGetAllUser)
+	if err != nil {
+		panic(err)
+	}
+
+	for rows.Next() {
+		u := &User{}
+		err := rows.Scan(
+			&u.ID,
+			&u.FirstName,
+			&u.LastName,
+			&u.UserName,
+			&u.Email,
+			&u.Password,
+			&u.SignupDate,
+			&u.Admin,
+		)
+
+		if err != nil {
+			if err == sql.ErrNoRows {
+				return users, nil
+			}
+			panic(err)
+		}
+
+		users = append(users, u)
+	}
+
+	if err := rows.Err(); err != nil {
+		panic(err)
+	}
+
+	return users, nil
 }
 
 func Range(db *sqlx.DB, currentPage, perPage int) ([]*User, error) {
