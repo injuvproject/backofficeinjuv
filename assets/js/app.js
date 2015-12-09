@@ -20,5 +20,37 @@ $(document).ready(function() {
             toleranceElement: '> div'
     });
 
+    $('#btn-new-activity').click(function(){
+		
+		
+		var formData = {'name': $('#name-activity').val().trim(), 'description': $('#description-activity').val().trim(), 'fechaExpiracion': $('#expiracion-activity').val().trim(), 'recurso': $('#recursos').val().trim(), 'estado': $('#estado').val().trim() };
+			$.post( "htt",
+			 	formData, 
+			 	function() {
+			 		console.log('exito')
+			})
+  			.done(function(data, textStatus) {
+  					console.log('OK: true';
+  					//
+  			})
+	  		.fail(function(jqXHR, textStatus, errorThrown) {
+	    			console.log('error:'+errorThrown);
+    				console.log('status:'+textStatus);
+    				console.log('jqXHR:'+jqXHR);
+    				
+    				if (errorThrown === 'Bad Request'){
+    					alert('Failed to connect to server')
+    				}else if ( errorThrown === 'Unauthorized'){
+    					alert('error guardar avtividad')
+
+    				}
+	  		})
+	  		.always(function(data, textStatus, jqXHR) {
+	    		console.log( "finished" );
+			});
+	
+	});
+
+
 	
 });

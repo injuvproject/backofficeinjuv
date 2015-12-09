@@ -8,5 +8,5 @@ const (
 	//pass jwt
 	SecretPassword = "h2so4injuv"
 	//
-	NumberResultPage = 1
+	NumberResultPage = 3
 )

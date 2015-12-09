@@ -25,3 +25,12 @@ func GetActivities(c web.C, w http.ResponseWriter, r *http.Request) {
 		Layout: "panel/layout",
 	})
 }
+
+func NewActivitie(c web.C, w http.ResponseWriter, r *http.Request) {
+	template := c.Env["render"].(*render.Render)
+	//firstName := utils.GetAndTrim(r, "firstname")
+
+	response := ""
+
+	template.JSON(w, http.StatusOK, response)
+}
