@@ -47,7 +47,7 @@ func main() {
 	goji.Get("/panel/:id/cuenta/:uid/eliminar.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetDeleteProfile))
 	//Actividades
 	goji.Get("/panel/:id/actividades.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetActivities))
-	goji.Post("/panel/nueva/actividad.html", cji.Use(database.InjectDatabase(db)).On(handlers.NewActivitie))
+	goji.Post("/panel/nueva/actividad", cji.Use(database.InjectDatabase(db)).On(handlers.NewActivitie))
 
 	goji.Get("/test", cji.Use(authenticate.InjectAuthenticate).On(func(c web.C, w http.ResponseWriter, r *http.Request) {
 

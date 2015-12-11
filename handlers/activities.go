@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/injuvproject/backofficeinjuv/helpers/security"
+	"github.com/injuvproject/backofficeinjuv/helpers/utils"
 	"github.com/injuvproject/backofficeinjuv/models/binding"
 	"github.com/injuvproject/backofficeinjuv/models/user"
 	"github.com/jmoiron/sqlx"
@@ -28,9 +29,15 @@ func GetActivities(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func NewActivitie(c web.C, w http.ResponseWriter, r *http.Request) {
 	template := c.Env["render"].(*render.Render)
-	//firstName := utils.GetAndTrim(r, "firstname")
+	name := utils.GetAndTrim(r, "name")
+	description := utils.GetAndTrim(r, "description")
+	dateExpire := utils.GetAndTrim(r, "fechaExpiracion")
+	recursos := utils.GetAndTrim(r, "recurso")
+	estado := utils.GetAndTrim(r, "estado")
+	bnd := binding.GetDefault(r)
 
-	response := ""
+	bnd["User"] = name
+	bnd["Description"] = description
 
-	template.JSON(w, http.StatusOK, response)
+	template.JSON(w, http.StatusOK, bnd)
 }
