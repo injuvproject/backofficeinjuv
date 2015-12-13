@@ -2,7 +2,7 @@ $(document).ready(function() {
 	"use strict";
 	//carga la fecha cuando se crea una actividad
 	$('#datetimepicker1').datetimepicker({
-		format:'d.m.Y H:i',
+		format:'Y-m-d H:i',
   		lang:'es'
 	});
 	//verifica si el checkbox que indica si es administrador es valido	
@@ -21,7 +21,8 @@ $(document).ready(function() {
     });
 
     $('#btn-new-activity').click(function(){
-		var formData = {'name': $('#name-activity').val(), 'description': $('#description-activity').val(), 'fechaExpiracion': $('#expiracion-activity').val(), 'recurso': $('#recursos').val(), 'estado': $('#estado').val() }
+    	console.log('date:' + $('#datetimepicker1').val())
+		var formData = {'name': $('#name-activity').val(), 'description': $('#description-activity').val(), 'fechaExpiracion': $('#datetimepicker1').val(), 'recurso': $('#recursos').val(), 'estado': $('#estado').val(), 'pioridad': $('#pioridad').val(), 'adjunto': '0' }
 			$.post( "http://localhost:3000/panel/nueva/actividad",
 			 	formData, 
 			 	function() {
@@ -29,7 +30,11 @@ $(document).ready(function() {
 			})
   			.done(function(data, textStatus){
   					console.log('OK: true');
-  					//
+  					$('#myModal').modal('hide');
+  					$('#name-activity').val("");
+  					$('#description-activity').val("");
+  					$('#datetimepicker1').val("");
+  					alert('Se a cargado la tarea exitosamente');
   			})
 	  		.fail(function(jqXHR, textStatus, errorThrown){
 	    			console.log('error:'+errorThrown);
