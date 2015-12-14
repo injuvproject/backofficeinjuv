@@ -59,20 +59,13 @@
 								</div>
 								<div class="form-group">
 								    <div class="col-sm-10">
-								  		<label for="inputEstado" class="col-sm-2 control-label">Estado</label>
-		            					<select class="form-control input-sm" name="estado" id="estado">
-											<option disabled selected>Selecionar</option>
-											<option value="Impedidos" selected>Impedidos</option>
-											<option value="Pendientes" selected>Pendientes</option>
-											<option value="EnProceso" selected>En Proceso</option>
-											<option value="Terminados" selected>Terminados</option>  
-										</select>
+								    	<input type="hidden" name="id" id="estado" value="Pendientes">
 									</div>
 								</div>
 								<div class="form-group">
 								    <div class="col-sm-10">
 								  		<label for="inputPioridad" class="col-sm-2 control-label">Pioridad</label>
-		            					<select class="form-control input-sm" name="pioridad" id="pioridad">
+		            					<select class="form-control input-sm" name="pioridad" id="pioridad" value="">
 											<option disabled selected>Selecionar</option>
 											<option value="Alta" selected>Alta</option>
 											<option value="Media" selected>Media</option>
@@ -88,7 +81,7 @@
 		      				
 		      			</div>
 		      		</div>
-		       Comments
+		       
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -102,11 +95,11 @@
 		<br>
 			{{ range  .Impedidas}}
 				
-				<div class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#activityModal">
+				<div class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#activityModalIM">
 					<p><label>Actividad: {{ .Title }}</label></p>
 					<p><label>Pioridad: {{ .Pioridad }}</label></p>
 				</div>
-		<div class="modal fade" id="activityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal fade" id="activityModalIM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -117,6 +110,10 @@
 		      		<div class="row">
 		      			<div class="col-md-8">
 		      				<form class="form-horizontal">
+
+		      					<div class="form-group">
+		      						 <input type="hidden" name="id" id="id-activityIM" value="{{ .ID }}">
+		      					</div>
 								
 								<div class="form-group">
 								    <div class="col-sm-10">
@@ -127,14 +124,14 @@
 								</div>
 								<div class="form-group">
 									<div class="col-sm-10">
-	                					<label for="ResponseDate"> Expira: {{ .ExpireDates }}</label>
+	                					<label for="ResponseDate" id="date-impedido"> Expira: {{ .ExpireDates }}</label>
 	                				</div>
             					</div>
             					
 								<div class="form-group">
 								    <div class="col-sm-10">
 								  		<label for="inputEstado" class="col-sm-2 control-label">Estado</label>
-		            					<select class="form-control input-sm" name="estado" id="estado">
+		            					<select class="form-control input-sm" name="estado" id="estadoIM" value="">
 											<option disabled selected>Selecionar</option>
 											<option value="Impedidos" selected>Impedidos</option>
 											<option value="Pendientes" selected>Pendientes</option>
@@ -150,7 +147,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" id="btn-closeImpedidos" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-		        <button type="button" class="btn btn-primary" id="btn-new-activity">actualizar</button>
+		        <button type="button" class="btn btn-primary" id="btn-update-activityIM">actualizar</button>
 		      </div>
 		    </div>
 		  </div>
@@ -159,9 +156,8 @@
 			{{ end }}
 
 					<!-- Modal -->
-		
-
 	</div>
+
 	<div class="col-md-3 bg-info colum-activity" id="pendientes">
 		<h1 class="page-heading">Pendientes</h1>
 		{{ if $admin }}
@@ -191,6 +187,9 @@
 		      		<div class="row">
 		      			<div class="col-md-8">
 		      				<form class="form-horizontal">
+		      					<div class="form-group">
+		      						 <input type="hidden" name="id" id="id-activityPEN" value="{{ .ID }}">
+		      					</div>
 								
 								<div class="form-group">
 								    <div class="col-sm-10">
@@ -201,16 +200,14 @@
 								</div>
 								<div class="form-group">
 									<div class="col-sm-10">
-	                					<div class="input-group date">
-	                    					
-	                					</div>
+	                					<label for="ResponseDate" id="date-impedido"> Expira: {{ .ExpireDates }}</label>
 	                				</div>
             					</div>
             					
 								<div class="form-group">
 								    <div class="col-sm-10">
 								  		<label for="inputEstado" class="col-sm-2 control-label">Estado</label>
-		            					<select class="form-control input-sm" name="estado" id="estado">
+		            					<select class="form-control input-sm" name="estado" id="estadoPEN" value="">
 											<option disabled selected>Selecionar</option>
 											<option value="Impedidos" selected>Impedidos</option>
 											<option value="Pendientes" selected>Pendientes</option>
@@ -226,7 +223,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-		        <button type="button" class="btn btn-primary" id="btn-new-activity">actualizar</button>
+		        <button type="button" class="btn btn-primary" id="btn-update-activityPEN">actualizar</button>
 		      </div>
 		    </div>
 		  </div>
@@ -235,8 +232,8 @@
 		{{ end }}
 		</div>
 		
-		
 	</div>
+
 	<div class="col-md-3 bg-primary colum-activity" id="proceso">
 		<h1 class="page-heading">En Proceso</h1>
 		{{ if $admin }}
@@ -264,6 +261,10 @@
 		      		<div class="row">
 		      			<div class="col-md-8">
 		      				<form class="form-horizontal">
+
+		      					<div class="form-group">
+		      						 <input type="hidden" name="id" id="id-activityP" value="{{ .ID }}">
+		      					</div>
 								
 								<div class="form-group">
 								    <div class="col-sm-10">
@@ -274,16 +275,14 @@
 								</div>
 								<div class="form-group">
 									<div class="col-sm-10">
-	                					<div class="input-group date">
-	                    					
-	                					</div>
+	                					<label for="ResponseDate" id="date-impedido"> Expira: {{ .ExpireDates }}</label>
 	                				</div>
             					</div>
             					
 								<div class="form-group">
 								    <div class="col-sm-10">
 								  		<label for="inputEstado" class="col-sm-2 control-label">Estado</label>
-		            					<select class="form-control input-sm" name="estado" id="estado">
+		            					<select class="form-control input-sm" name="estadoP" id="estadoP" value="">
 											<option disabled selected>Selecionar</option>
 											<option value="Impedidos" selected>Impedidos</option>
 											<option value="Pendientes" selected>Pendientes</option>
@@ -299,7 +298,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-		        <button type="button" class="btn btn-primary" id="btn-new-activity">actualizar</button>
+		        <button type="button" class="btn btn-primary" id="btn-update-activityP">actualizar</button>
 		      </div>
 		    </div>
 		  </div>
@@ -307,6 +306,7 @@
 
 		{{ end }}
 	</div>
+
 	<div class="col-md-3 bg-success colum-activity" id="terminadas">
 		<h1 class="page-heading">Terminadas</h1>
 		{{ if $admin }}
@@ -336,6 +336,9 @@
 		      			<div class="col-md-8">
 		      				<form class="form-horizontal">
 								
+		      					<div class="form-group">
+		      						 <input type="hidden" name="id" id="id-activityT" value="{{ .ID }}">
+		      					</div>
 								<div class="form-group">
 								    <div class="col-sm-10">
 								    	<label for="ResponseDescription" >Descripcion:</label><br><br>
@@ -345,16 +348,13 @@
 								</div>
 								<div class="form-group">
 									<div class="col-sm-10">
-	                					<div class="input-group date">
-	                    					
-	                					</div>
+	                					<label for="ResponseDate" id="date-impedido"> Expira: {{ .ExpireDates }}</label>
 	                				</div>
             					</div>
-            					
 								<div class="form-group">
 								    <div class="col-sm-10">
 								  		<label for="inputEstado" class="col-sm-2 control-label">Estado</label>
-		            					<select class="form-control input-sm" name="estado" id="estado">
+		            					<select class="form-control input-sm" name="estado" id="estadoT">
 											<option disabled selected>Selecionar</option>
 											<option value="Impedidos" selected>Impedidos</option>
 											<option value="Pendientes" selected>Pendientes</option>
@@ -370,7 +370,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-		        <button type="button" class="btn btn-primary" id="btn-new-activity">actualizar</button>
+		        <button type="button" class="btn btn-primary" id="btn-update-activityT">actualizar</button>
 		      </div>
 		    </div>
 		  </div>

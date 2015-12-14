@@ -17,10 +17,17 @@ const (
 	sqlInsertActivity            = "INSERT INTO tareas (titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad) VALUES (:titulo, :descripcion, :fechaTermino, :miembros_id, :estado, :adjuntos_id, :pioridad );"
 	sqlInsertComments            = "INSERT INTO comentarios (fechaCreacion, comentarioscol, tareas_id) VALUES(:fechaCreacion, :comentarioscol, :tareas_id);"
 	sqlGetActivityByID           = "SELECT id, titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad FROM tareas  WHERE miembros_id = ?;"
-	sqlGetActivityImpedidasByID  = "SELECT id, titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad FROM tareas  WHERE miembros_id = ? && estado = 'impedida' ;"
+	sqlGetActivityImpedidasByID  = "SELECT id, titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad FROM tareas  WHERE miembros_id = ? && estado = 'Impedidos' ;"
 	sqlGetActivityPendientesByID = "SELECT id, titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad FROM tareas  WHERE miembros_id = ? && estado = 'Pendientes' ;"
 	sqlGetActivityEnProcesoByID  = "SELECT id, titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad FROM tareas  WHERE miembros_id = ? && estado = 'EnProceso' ;"
 	sqlGetActivityTerminadosByID = "SELECT id, titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad FROM tareas  WHERE miembros_id = ? && estado = 'Terminados' ;"
+	sqlGetActivityTerminadosALL  = "SELECT id, titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad FROM tareas  WHERE  estado = 'Terminados' ;"
+
+	sqlGetActivityImpedidasALL  = "SELECT id, titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad FROM tareas  WHERE  estado = 'Impedidos' ;"
+	sqlGetActivityPendientesALL = "SELECT id, titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad FROM tareas  WHERE  estado = 'Pendientes' ;"
+	sqlGetActivityEnProcesoALL  = "SELECT id, titulo, descripcion, fechaTermino, miembros_id, estado, adjuntos_id, pioridad FROM tareas  WHERE  estado = 'EnProceso' ;"
+
+	sqlUpdateActivityByID = "UPDATE tareas SET estado = ? WHERE id = ?;"
 )
 
 type Activity struct {
@@ -98,7 +105,6 @@ func Get(db *sqlx.DB, id int) ([]*Activity, error) {
 		Activitys = append(Activitys, a)
 	}
 
-	fmt.Println(Activitys[0])
 	if err := rows.Err(); err != nil {
 		panic(err)
 	}
@@ -109,17 +115,27 @@ func Get(db *sqlx.DB, id int) ([]*Activity, error) {
 func GetImpedidas(db *sqlx.DB, id int) ([]*Activity, error) {
 	var (
 		Activitys []*Activity
+		rows      *sql.Rows
 	)
 
 	if id <= 0 {
-		//execute sql sin id
-		return nil, ErrNoIDSent
-	}
+		var (
+			err error
+		)
+		rows, err = db.Query(sqlGetActivityImpedidasALL)
+		if err != nil {
+			return nil, err
+		}
 
-	rows, err := db.Query(sqlGetActivityImpedidasByID, id)
+	} else {
+		var (
+			err error
+		)
+		rows, err = db.Query(sqlGetActivityImpedidasByID, id)
 
-	if err != nil {
-		panic(err)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	for rows.Next() {
@@ -145,7 +161,6 @@ func GetImpedidas(db *sqlx.DB, id int) ([]*Activity, error) {
 		Activitys = append(Activitys, a)
 	}
 
-	fmt.Println(Activitys[0])
 	if err := rows.Err(); err != nil {
 		panic(err)
 	}
@@ -156,17 +171,28 @@ func GetImpedidas(db *sqlx.DB, id int) ([]*Activity, error) {
 func GetPendintes(db *sqlx.DB, id int) ([]*Activity, error) {
 	var (
 		Activitys []*Activity
+		rows      *sql.Rows
 	)
 
 	if id <= 0 {
-		//execute sql sin id
-		return nil, ErrNoIDSent
-	}
+		var (
+			err error
+		)
+		rows, err = db.Query(sqlGetActivityPendientesALL)
+		if err != nil {
+			return nil, err
+		}
 
-	rows, err := db.Query(sqlGetActivityPendientesByID, id)
+	} else {
+		var (
+			err error
+		)
+		rows, err = db.Query(sqlGetActivityPendientesByID, id)
 
-	if err != nil {
-		panic(err)
+		if err != nil {
+			panic(err)
+		}
+
 	}
 
 	for rows.Next() {
@@ -192,7 +218,6 @@ func GetPendintes(db *sqlx.DB, id int) ([]*Activity, error) {
 		Activitys = append(Activitys, a)
 	}
 
-	fmt.Println(Activitys[0])
 	if err := rows.Err(); err != nil {
 		panic(err)
 	}
@@ -203,17 +228,28 @@ func GetPendintes(db *sqlx.DB, id int) ([]*Activity, error) {
 func GetEnProceso(db *sqlx.DB, id int) ([]*Activity, error) {
 	var (
 		Activitys []*Activity
+		rows      *sql.Rows
 	)
 
 	if id <= 0 {
-		//execute sql sin id
-		return nil, ErrNoIDSent
-	}
+		var (
+			err error
+		)
+		rows, err = db.Query(sqlGetActivityEnProcesoALL)
+		if err != nil {
+			return nil, err
+		}
 
-	rows, err := db.Query(sqlGetActivityEnProcesoByID, id)
+	} else {
+		var (
+			err error
+		)
+		rows, err = db.Query(sqlGetActivityEnProcesoByID, id)
 
-	if err != nil {
-		panic(err)
+		if err != nil {
+			panic(err)
+		}
+
 	}
 
 	for rows.Next() {
@@ -239,7 +275,6 @@ func GetEnProceso(db *sqlx.DB, id int) ([]*Activity, error) {
 		Activitys = append(Activitys, a)
 	}
 
-	fmt.Println(Activitys[0])
 	if err := rows.Err(); err != nil {
 		panic(err)
 	}
@@ -250,17 +285,26 @@ func GetEnProceso(db *sqlx.DB, id int) ([]*Activity, error) {
 func GetTerminados(db *sqlx.DB, id int) ([]*Activity, error) {
 	var (
 		Activitys []*Activity
+		rows      *sql.Rows
 	)
 
 	if id <= 0 {
-		//execute sql sin id
-		return nil, ErrNoIDSent
-	}
+		var (
+			err error
+		)
+		rows, err = db.Query(sqlGetActivityTerminadosALL)
+		if err != nil {
+			return nil, ErrNoIDSent
+		}
 
-	rows, err := db.Query(sqlGetActivityTerminadosByID, id)
-
-	if err != nil {
-		panic(err)
+	} else {
+		var (
+			err error
+		)
+		rows, err = db.Query(sqlGetActivityTerminadosByID, id)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	for rows.Next() {
@@ -286,10 +330,24 @@ func GetTerminados(db *sqlx.DB, id int) ([]*Activity, error) {
 		Activitys = append(Activitys, a)
 	}
 
-	fmt.Println(Activitys[0])
 	if err := rows.Err(); err != nil {
 		panic(err)
 	}
 
 	return Activitys, nil
+}
+
+func UpdateStatusActivity(db *sqlx.DB, id int, estado string) error {
+
+	if id <= 0 {
+		return ErrNoIDSent
+	}
+
+	_, err := db.Exec(sqlUpdateActivityByID, estado, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
 }

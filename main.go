@@ -48,6 +48,7 @@ func main() {
 	//Actividades
 	goji.Get("/panel/:id/actividades.html", cji.Use(database.InjectDatabase(db), authenticate.InjectAuthenticate, loaduser.LoadUser).On(handlers.GetActivities))
 	goji.Post("/panel/nueva/actividad", cji.Use(database.InjectDatabase(db)).On(handlers.NewActivitie))
+	goji.Post("/panel/actualiza/actividad", cji.Use(database.InjectDatabase(db)).On(handlers.UpdateActivity))
 
 	goji.Get("/test", cji.Use(authenticate.InjectAuthenticate).On(func(c web.C, w http.ResponseWriter, r *http.Request) {
 

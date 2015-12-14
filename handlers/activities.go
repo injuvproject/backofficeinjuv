@@ -34,7 +34,6 @@ var (
 
 func GetActivities(c web.C, w http.ResponseWriter, r *http.Request) {
 	var (
-		activitie  []*activity.Activity
 		pendientes []*activity.Activity
 		impedidas  []*activity.Activity
 		proceso    []*activity.Activity
@@ -42,27 +41,32 @@ func GetActivities(c web.C, w http.ResponseWriter, r *http.Request) {
 	)
 	template := c.Env["render"].(*render.Render)
 	db := c.Env["mysql"].(*sqlx.DB)
-	//id, _ := strconv.Atoi(c.URLParams["uid"])
+	id, _ := strconv.Atoi(c.URLParams["id"])
 	cookie, _ := r.Cookie("injuv_auth")
 	claims, _ := security.Decode(cookie.Value)
 	users, _ := user.GetAll(db)
 	bnd := binding.GetDefault(r)
-	//if claims["guuid"].(bool) {
-	//panic("debe devolverse todas las actividades")
-	//} else {
 
-	activitie, _ = activity.Get(db, 1)
-	impedidas, _ = activity.GetImpedidas(db, 1)
-	pendientes, _ = activity.GetPendintes(db, 1)
-	proceso, _ = activity.GetEnProceso(db, 1)
-	terminados, _ = activity.GetTerminados(db, 1)
+	fmt.Println("\n\n\n\n\n\n %d", id)
+	if claims["guuid"].(bool) {
+		impedidas, _ = activity.GetImpedidas(db, 0)
+		pendientes, _ = activity.GetPendintes(db, 0)
+		proceso, _ = activity.GetEnProceso(db, 0)
+		terminados, _ = activity.GetTerminados(db, 0)
 
-	//}
+		fmt.Println("\n\n\n\n\n\n ", impedidas)
+	} else {
+
+		impedidas, _ = activity.GetImpedidas(db, id)
+		pendientes, _ = activity.GetPendintes(db, id)
+		proceso, _ = activity.GetEnProceso(db, id)
+		terminados, _ = activity.GetTerminados(db, id)
+
+	}
 
 	bnd["Users"] = users
 	bnd["ID"] = claims["id"]
 	bnd["ADMIN"] = claims["guuid"]
-	bnd["Activities"] = activitie
 	bnd["Impedidas"] = impedidas
 	bnd["Pendientes"] = pendientes
 	bnd["Proceso"] = proceso
@@ -87,11 +91,6 @@ func NewActivitie(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("\n\n\n%s", dateExpire)
 
-	//maskDate := "Mon Jan 2 15:04:05 -0700 MST 2006"
-
-	//date, err := time.Parse(maskDate, dateExpire)
-
-	//fmt.Println("\n\n\n%s", date)
 	userid, _ := strconv.Atoi(recursos)
 
 	if name == "" {
@@ -136,6 +135,23 @@ func NewActivitie(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	template.JSON(w, http.StatusOK, bnd)
+}
+
+func UpdateActivity(c web.C, w http.ResponseWriter, r *http.Request) {
+
+	template := c.Env["render"].(*render.Render)
+	db := c.Env["mysql"].(*sqlx.DB)
+	bnd := binding.GetDefault(r)
+	idActivity, _ := strconv.Atoi(utils.GetAndTrim(r, "id"))
+	estado := utils.GetAndTrim(r, "estado")
+
+	err := activity.UpdateStatusActivity(db, idActivity, estado)
+	if err != nil {
+		panic(err)
+	}
+
+	template.JSON(w, http.StatusOK, bnd)
+
 }
 
 func sendEmail(Body, Sender, Subject, sentTo string) error {
