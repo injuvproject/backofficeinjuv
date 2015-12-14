@@ -57,7 +57,7 @@ $(document).ready(function() {
 	 	$('#myModalLabel').val("");
   		$('#description-impedidos').val("");
   		$('#date-impedido').val("");
-  		$('##myModalLabel').attr('h4', '');
+  		$('#myModalLabel').attr('h4', '');
 
 	 });
 
