@@ -52,6 +52,14 @@ $(document).ready(function() {
 	    		console.log( "finished" );
 			});
 	});
+	
+	 $('#btn-closeImpedidos').click(function(){
+	 	$('#myModalLabel').val("");
+  		$('#description-impedidos').val("");
+  		$('#date-impedido').val("");
+  		$('##myModalLabel').attr('h4', '');
+
+	 });
 
 
 	

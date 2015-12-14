@@ -33,15 +33,40 @@ var (
 )
 
 func GetActivities(c web.C, w http.ResponseWriter, r *http.Request) {
+	var (
+		activitie  []*activity.Activity
+		pendientes []*activity.Activity
+		impedidas  []*activity.Activity
+		proceso    []*activity.Activity
+		terminados []*activity.Activity
+	)
 	template := c.Env["render"].(*render.Render)
 	db := c.Env["mysql"].(*sqlx.DB)
+	//id, _ := strconv.Atoi(c.URLParams["uid"])
 	cookie, _ := r.Cookie("injuv_auth")
 	claims, _ := security.Decode(cookie.Value)
 	users, _ := user.GetAll(db)
 	bnd := binding.GetDefault(r)
+	//if claims["guuid"].(bool) {
+	//panic("debe devolverse todas las actividades")
+	//} else {
+
+	activitie, _ = activity.Get(db, 1)
+	impedidas, _ = activity.GetImpedidas(db, 1)
+	pendientes, _ = activity.GetPendintes(db, 1)
+	proceso, _ = activity.GetEnProceso(db, 1)
+	terminados, _ = activity.GetTerminados(db, 1)
+
+	//}
+
 	bnd["Users"] = users
 	bnd["ID"] = claims["id"]
 	bnd["ADMIN"] = claims["guuid"]
+	bnd["Activities"] = activitie
+	bnd["Impedidas"] = impedidas
+	bnd["Pendientes"] = pendientes
+	bnd["Proceso"] = proceso
+	bnd["Terminados"] = terminados
 	template.HTML(w, http.StatusOK, "panel/activities", bnd, render.HTMLOptions{
 		Layout: "panel/layout",
 	})
@@ -58,6 +83,15 @@ func NewActivitie(c web.C, w http.ResponseWriter, r *http.Request) {
 	recursos := utils.GetAndTrim(r, "recurso")
 	estado := utils.GetAndTrim(r, "estado")
 	pioridad := utils.GetAndTrim(r, "pioridad")
+	//	adjunto := utils.GetAndTrim(r, "adjunto")
+
+	fmt.Println("\n\n\n%s", dateExpire)
+
+	//maskDate := "Mon Jan 2 15:04:05 -0700 MST 2006"
+
+	//date, err := time.Parse(maskDate, dateExpire)
+
+	//fmt.Println("\n\n\n%s", date)
 	userid, _ := strconv.Atoi(recursos)
 
 	if name == "" {
@@ -102,10 +136,6 @@ func NewActivitie(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	template.JSON(w, http.StatusOK, bnd)
-}
-
-func GetActivitiesByUser(c web.C, w http.ResponseWriter, r *http.Request) {
-
 }
 
 func sendEmail(Body, Sender, Subject, sentTo string) error {
