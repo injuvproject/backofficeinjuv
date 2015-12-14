@@ -28,6 +28,9 @@ func main() {
 			h.ServeHTTP(w, r)
 		}
 
+		return http.HandlerFunc(fn)
+	})
+
 	db := helperdb.GetDatabase()
 	defer db.Close()
 
