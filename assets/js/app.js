@@ -14,12 +14,6 @@ $(document).ready(function() {
 	    }
 	});
    
-   	$('.sortable').nestedSortable({
-            handle: 'div',
-            items: 'li',
-            toleranceElement: '> div'
-    });
-
     $('#btn-new-activity').click(function(){
     	
 		var formData = {'name': $('#name-activity').val(), 'description': $('#description-activity').val(), 'fechaExpiracion': $('#datetimepicker1').val(), 'recurso': $('#recursos').val(), 'estado': $('#estado').val(), 'pioridad': $('#pioridad').val(), 'adjunto': '0' }
