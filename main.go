@@ -22,6 +22,12 @@ import (
 
 func main() {
 
+	goji.Use(func(c *web.C, h http.Handler) http.Handler {
+		fn := func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			h.ServeHTTP(w, r)
+		}
+
 	db := helperdb.GetDatabase()
 	defer db.Close()
 
