@@ -17,7 +17,7 @@ $(document).ready(function() {
     $('#btn-new-activity').click(function(){
     	
 		var formData = {'name': $('#name-activity').val(), 'description': $('#description-activity').val(), 'fechaExpiracion': $('#datetimepicker1').val(), 'recurso': $('#recursos').val(), 'estado': $('#estado').val(), 'pioridad': $('#pioridad').val(), 'adjunto': '0' }
-			$.post( "http://188.166.41.225:3000/panel/nueva/actividad",
+			$.post( "http://localhost:3000/panel/nueva/actividad",
 			 	formData, 
 			 	function() {
 			 		console.log('exito');
@@ -52,7 +52,7 @@ $(document).ready(function() {
 		console.log("id:" + $('#id-activityIM').val());
 		console.log("Estado:" + $('#estadoIM').val());
 		var formData = {'id': $('#id-activityIM').val(), 'estado': $('#estadoIM').val()}
-			$.post( "http://188.166.41.225:3000/panel/actualiza/actividad",
+			$.post( "http://localhost:3000/panel/actualiza/actividad",
 			 	formData, 
 			 	function() {
 			 		console.log('exito');
@@ -95,7 +95,7 @@ $(document).ready(function() {
 		console.log("id:" + $('#id-activityT').val());
 		console.log("Estado:" + $('#estadoT').val());
 		var formData = {'id': $('#id-activityT').val(), 'estado': $('#estadoT').val()}
-			$.post( "http://188.166.41.225:3000/panel/actualiza/actividad",
+			$.post( "http://localhost:3000/panel/actualiza/actividad",
 			 	
 			 	formData, 
 			 	function() {
@@ -133,7 +133,7 @@ $(document).ready(function() {
 		console.log("id:" + $('#id-activityP').val());
 		console.log("Estado:" + $('#estadoP').val());
 		var formData = {'id': $('#id-activityP').val(), 'estado': $('#estadoP').val()}
-			$.post( "http://188.166.41.225:3000/panel/actualiza/actividad",
+			$.post( "http://localhost:3000/panel/actualiza/actividad",
 			 	formData, 
 			 	function() {
 			 		console.log('exito');
@@ -170,7 +170,7 @@ $(document).ready(function() {
 		console.log("id:" + $('#id-activityPEN').val());
 		console.log("Estado:" + $('#estadoPEN').val());
 		var formData = {'id': $('#id-activityPEN').val(), 'estado': $('#estadoPEN').val()}
-			$.post( "http://188.166.41.225:3000/panel/actualiza/actividad",
+			$.post( "http://localhost:3000/panel/actualiza/actividad",
 			 	formData, 
 			 	function() {
 			 		console.log('exito');
